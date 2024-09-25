@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 
 const books = await getCollection("books");
+
+export const prerender = true; // indicamos que prerenderice la página para que siga siendo estática, sigue igual que en el build de producción
 ---
 
 <Layout title="Dev Books, libros para programadores">
