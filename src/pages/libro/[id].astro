@@ -4,6 +4,7 @@ import { SHOW_BUY_BUTTON } from "astro:env/server";
 import BookScore from "../../components/BookScore.astro";
 import BuyButton from "../../components/BuyButton.astro";
 import Layout from "../../layouts/Layout.astro";
+import BuyButtonUI from "../../ui/BuyButtonUi.astro";
 
 export async function getStaticPaths() {
 	const books = await getCollection("books");
@@ -34,7 +35,9 @@ export const prerender = true;
             </BookScore>
 
             {
-                SHOW_BUY_BUTTON && <BuyButton server:defer buy={buy} />
+                SHOW_BUY_BUTTON && <BuyButton server:defer buy={buy}>
+                    <BuyButtonUI slot="fallback" />
+                </BuyButton>
             }
         </aside>
         <main class="max-w-3xl">
