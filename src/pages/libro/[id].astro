@@ -4,7 +4,7 @@ import { SHOW_BUY_BUTTON } from "astro:env/server";
 import BookScore from "../../components/BookScore.astro";
 import BuyButton from "../../components/BuyButton.astro";
 import Layout from "../../layouts/Layout.astro";
-import BuyButtonUI from "../../ui/BuyButtonUi.astro";
+import BuyButtonUI from "../../ui/BuyButtonUI.astro";
 
 export async function getStaticPaths() {
 	const books = await getCollection("books");
