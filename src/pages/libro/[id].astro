@@ -1,5 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
+import { SHOW_BUY_BUTTON } from "astro:env/server";
+import AmazonLogo from "../../components/AmazonLogo.astro";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -23,7 +25,23 @@ const { Content } = await render(book);
         <aside class="flex flex-col items-center gap-4">
             <a href="/" class="hover:underline opacity-70">⬅ Volver atrás</a>
             <img transition:name={`img-${slug}`} class="rounded w-72 h-auto" src={`/${img}`} alt={title}>
-            <!-- Enlace para comprar -->
+
+            <span class="text-xs" id="score"></span>
+
+            {
+                SHOW_BUY_BUTTON && (
+                    <a
+                        href={buy.spain}
+                        title="Comprar libro"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-balance inline-flex gap-2 items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg border border-yellow-500 transition duration-200 ease-in-out hover:scale-105 justify-center text-center"
+                        >
+                        Comprar en Amazon España
+                        <AmazonLogo />
+                    </a>
+                )
+            }
         </aside>
         <main class="max-w-3xl">
             <h1 class="text-4xl font-bold mb-4">{title}</h1>
@@ -33,3 +51,16 @@ const { Content } = await render(book);
         </main>
     </div>
 </Layout>
+
+<script>
+    import { SCORE_API_ENDPOINT } from "astro:env/client";
+
+    const scoreElement = document.getElementById("score");
+    if(scoreElement) {
+        fetch(SCORE_API_ENDPOINT)
+            .then(res => res.text())
+            .then(scoreValue => {
+                    scoreElement.innerText = `⭐ Puntuación: ${scoreValue.trim()}/5`
+                })
+    }
+</script>
